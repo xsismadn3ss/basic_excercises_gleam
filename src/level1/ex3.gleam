@@ -2,6 +2,7 @@
 // Duplicar un string n vecesduplicate(text: String, times: Int) -> String
 // Usa recursión (sin string.repeat al principio).
 
+/// Duplicar un string n veces
 pub fn duplicate_str(text: String, times: Int) -> String {
   case times {
     times if times < 0 ->

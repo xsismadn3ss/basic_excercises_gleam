@@ -11,17 +11,23 @@ import gleam/string
 // age ≥ 13
 // email contiene "@"
 
+/// Representa un usuario con validación de campos
 pub opaque type User {
   User(name: String, age: Int, email: String)
 }
 
+/// Errores posibles al crear un usuario
 pub type UserError {
+  /// Nombre vacío
   EmptyName
+  /// Edad menor a 13
   Underage
+  /// Email no válido
   InvalidEmail
 }
 
-/// Crea un nuevo usuario validando los campos y acumulando errores
+/// Crea un nuevo usuario validando los campos,
+/// retorna un listado de errores si alguno no es válido
 pub fn create_user(
   name: String,
   age: Int,
@@ -49,7 +55,7 @@ pub fn create_user(
   }
 }
 
-/// Representa usuario como string
+/// Representar usuario como string
 pub fn describe_user(user: User) -> String {
   "User(name:"
   <> user.name
