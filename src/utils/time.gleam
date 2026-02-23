@@ -21,6 +21,7 @@ pub fn now(offset: Int) -> Time {
   )
 }
 
+/// Convertir tiempo a string en formato "HH:MM:SS.mmm"
 pub fn to_string(time: Time) -> String {
   int.to_string(time.hour)
   <> ":"
