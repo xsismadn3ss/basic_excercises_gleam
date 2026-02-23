@@ -1,4 +1,4 @@
-/// Ejercicio 1: Saludo
+// Ejercicio 1: Saludo
 
 /// Da un saludo dependiendo de la hora del día
 pub fn greeting(hour: Int) -> String {
