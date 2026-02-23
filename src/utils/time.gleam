@@ -3,7 +3,7 @@ import gleam/int
 import gleam/time/timestamp
 
 /// Tipo para representar tiempo
-pub opaque type Time {
+pub type Time {
   Time(hour: Int, minute: Int, second: Int, millisecond: Int)
 }
 
@@ -29,22 +29,6 @@ pub fn to_string(time: Time) -> String {
   <> int.to_string(time.second)
   <> "."
   <> int.to_string(time.millisecond)
-}
-
-pub fn to_hours(time: Time) -> Int {
-  time.hour
-}
-
-pub fn to_minutes(time: Time) -> Int {
-  time.minute
-}
-
-pub fn to_seconds(time: Time) -> Int {
-  time.second
-}
-
-pub fn to_milliseconds(time: Time) -> Int {
-  time.millisecond
 }
 
 fn convert_unix_to_millis(unix_seconds: Float) -> Int {
