@@ -13,3 +13,10 @@ pub fn kelvin_to_celsius_test() {
 
   assert conversion.value == 0.0
 }
+
+pub fn convert_temperature_text() {
+  let temp = ex10.Temperature(300.0, ex10.Kelvin)
+  let conversion = ex10.convert_temperature(temp, ex10.Celsius)
+
+  assert conversion.unit == ex10.Celsius
+}
