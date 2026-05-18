@@ -16,3 +16,13 @@ pub fn sum_positive_doubles(nums: List(Int)) -> Int {
   |> list.map(fn(x) { x * 2 })
   |> int.sum
 }
+
+pub fn sum_positive_doubles_optimized(nums: List(Int)) -> Int {
+  nums
+  |> list.fold(0, fn(acc, x) {
+    case x {
+      x if x > 0 -> acc + { x * 2 }
+      _ -> acc
+    }
+  })
+}
