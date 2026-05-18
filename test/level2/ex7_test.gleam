@@ -1,4 +1,3 @@
-import gleam/list
 import gleam/result
 import level2/ex7
 
@@ -21,8 +20,7 @@ pub fn wrong_user_test() {
   // Se invierte la lista de errores porque en gleam cuando se agrega un valor
   // a una lista se agrega al inicio, lo cual genera una lista de errores en 
   // orden inverso al esperado
-  assert result
-    == Error([ex7.EmptyName, ex7.Underage, ex7.InvalidEmail] |> list.reverse)
+  assert result == Error([ex7.EmptyName, ex7.Underage, ex7.InvalidEmail])
 }
 
 pub fn correct_user_test() {
