@@ -72,3 +72,31 @@ pub fn to_kelvin(temp: Temperature) -> Temperature {
     }
   }
 }
+
+/// Convertir un temperatura a una unidad especifica
+pub fn convert_temperature(temp: Temperature, to_unit: TempUnit) -> Temperature {
+  let origin_unit = temp.unit
+  let value = temp.value
+
+  case origin_unit, to_unit {
+    // Conversiones desde celcius
+    Celsius, Fharenheit -> Temperature(value |> celcius_to_fharenheit, to_unit)
+    Celsius, Kelvin -> Temperature(value |> celcius_to_kelvin, to_unit)
+
+    // Conversiones desde Fharenheit
+    Fharenheit, Celsius -> Temperature(value |> fharenheit_to_celcius, to_unit)
+    Fharenheit, Kelvin ->
+      Temperature(value |> fharenheit_to_celcius |> celcius_to_kelvin, to_unit)
+
+    // Conversiones desde Kelvin
+    Kelvin, Celsius -> Temperature(temp.value |> kelvin_to_celcius, to_unit)
+    Kelvin, Fharenheit ->
+      Temperature(
+        temp.value |> kelvin_to_celcius |> celcius_to_fharenheit,
+        to_unit,
+      )
+
+    // Otros patrones
+    _, _ -> temp
+  }
+}
