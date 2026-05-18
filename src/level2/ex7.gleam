@@ -1,4 +1,5 @@
 import gleam/int
+import gleam/list
 import gleam/string
 
 // Ejercicio 7
@@ -33,21 +34,20 @@ pub fn create_user(
   age: Int,
   email: String,
 ) -> Result(User, List(UserError)) {
-  let errors = []
+  let validation_results = [
+    validate_name(name),
+    validate_age(age),
+    validate_email(email),
+  ]
 
-  // Validar cada campo y acumular errores
-  let errors = case validate_name(name) {
-    Ok(_) -> errors
-    Error(e) -> [e, ..errors]
-  }
-  let errors = case validate_age(age) {
-    Ok(_) -> errors
-    Error(e) -> [e, ..errors]
-  }
-  let errors = case validate_email(email) {
-    Ok(_) -> errors
-    Error(e) -> [e, ..errors]
-  }
+  let errors =
+    list.fold(validation_results, [], fn(acc, result) {
+      case result {
+        Ok(_) -> acc
+        Error(e) -> [e, ..acc]
+      }
+    })
+    |> list.reverse
 
   case errors {
     [] -> Ok(User(name, age, email))
@@ -66,25 +66,30 @@ pub fn describe_user(user: User) -> String {
   <> ")"
 }
 
-fn validate_name(name: String) -> Result(String, UserError) {
+type ValidatedValue {
+  IntValue(value: Int)
+  StringValue(value: String)
+}
+
+fn validate_name(name: String) -> Result(ValidatedValue, UserError) {
   // Eliminar espacios en blanco
   let value = string.trim(name)
   case value {
     "" -> Error(EmptyName)
-    _ -> Ok(value)
+    _ -> Ok(StringValue(value))
   }
 }
 
-fn validate_age(age: Int) -> Result(Int, UserError) {
+fn validate_age(age: Int) -> Result(ValidatedValue, UserError) {
   case age {
     a if a < 13 -> Error(Underage)
-    _ -> Ok(age)
+    _ -> Ok(IntValue(age))
   }
 }
 
-fn validate_email(email: String) -> Result(String, UserError) {
+fn validate_email(email: String) -> Result(ValidatedValue, UserError) {
   case string.contains(email, "@") {
-    True -> Ok(email)
+    True -> Ok(StringValue(email))
     False -> Error(InvalidEmail)
   }
 }
